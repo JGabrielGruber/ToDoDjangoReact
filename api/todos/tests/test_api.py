@@ -22,6 +22,14 @@ class TodosAPITestCase(APITestCase):
         self.assertIsInstance(data, list)
         self.assertEqual(len(data), 1)
 
+    def test_search_todo(self):
+        """Check if is searching Todos"""
+        response = self.client.get('{}?search=task'.format(self.url_list))
+        data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIsInstance(data, list)
+        self.assertEqual(len(data), 1)
+
     def test_get_pk_todo(self):
         """Check if is returning specific Todo"""
         response = self.client.get(self.url_detail)
