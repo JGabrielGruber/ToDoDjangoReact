@@ -13,3 +13,4 @@ class TodoListView(generics.ListCreateAPIView):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'description']
     ordering_fields = ['created', 'edited', 'done']
+    ordering = ['-edited']
