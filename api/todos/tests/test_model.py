@@ -3,11 +3,11 @@ from io import BytesIO
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 
-from .models import Todo
-from .serializers import TodoSerializer
+from ..models import Todo
+from ..serializers import TodoSerializer
 
 
-class TodosTestCase(TestCase):
+class TodosModelTestCase(TestCase):
     def setUp(self) -> None:
         Todo.objects.create(
             title="Test task",
