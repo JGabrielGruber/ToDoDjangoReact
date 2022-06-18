@@ -13,6 +13,6 @@ class TodoListView(generics.ListCreateAPIView):
     serializer_class = TodoSerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter, ConditionalFilter]
     search_fields = ['title', 'description']
-    ordering_fields = ['created', 'edited', 'done']
+    ordering_fields = ['created', 'edited']
     ordering = ['-edited']
     conditional_fields = ['done']
