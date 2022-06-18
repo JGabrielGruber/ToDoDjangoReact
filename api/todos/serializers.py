@@ -28,5 +28,6 @@ class TodoSerializer(serializers.Serializer):
             'description',
             instance.description
         )
+        instance.done = validated_data.get('done', instance.done)
         instance.save()
         return instance

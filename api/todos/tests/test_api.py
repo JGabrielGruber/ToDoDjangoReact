@@ -30,6 +30,14 @@ class TodosAPITestCase(APITestCase):
         self.assertIsInstance(data, list)
         self.assertEqual(len(data), 1)
 
+    def test_conditional_todo(self):
+        """Check if is filtering conditional Todos"""
+        response = self.client.get('{}?conditional=-done'.format(self.url_list))
+        data = response.json()
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIsInstance(data, list)
+        self.assertEqual(len(data), 1)
+
     def test_get_pk_todo(self):
         """Check if is returning specific Todo"""
         response = self.client.get(self.url_detail)
