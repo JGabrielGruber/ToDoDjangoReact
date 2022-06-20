@@ -59,6 +59,7 @@ function TodosView(props: TodosViewProps) {
               title={todo.title}
               description={todo.description}
               edited={todo.edited}
+              done={todo.done}
             />
           ))}
         </List>
