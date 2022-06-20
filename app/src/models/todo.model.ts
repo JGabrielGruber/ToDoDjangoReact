@@ -17,21 +17,25 @@ interface TodoJSON {
 }
 
 class TodoModel implements Todo {
+  public readonly id?: number;
 
-  public readonly id?: number
-  public title: string
-  public description: string
-  public done: boolean = false
-  public readonly created?: Date
-  public readonly edited?: Date
+  public title: string;
+
+  public description: string;
+
+  public done: boolean = false;
+
+  public readonly created?: Date;
+
+  public readonly edited?: Date;
 
   constructor(
     title: string,
     description: string,
-    done: boolean = false,
     id?: number,
     created?: Date,
-    edited?: Date
+    edited?: Date,
+    done: boolean = false,
   ) {
     this.id = id;
     this.title = title;
@@ -47,10 +51,10 @@ class TodoModel implements Todo {
     return new this(
       json.title,
       json.description,
-      json.done,
       json.id,
       created,
-      edited
+      edited,
+      json.done,
     );
   }
 
