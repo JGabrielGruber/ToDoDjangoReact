@@ -1,8 +1,10 @@
 import React from 'react';
 
+import TodosView from './views/todos.view';
+
 function App() {
   return (
-    <p>Hello</p>
+    <TodosView />
   );
 }
 
