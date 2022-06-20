@@ -29,11 +29,11 @@ function TodosView(props: TodosViewProps) {
     onRefresh,
   } = props;
 
-  const handleRefresh = () => {
+  const handleRefresh = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (onRefresh) {
       onRefresh();
     }
-    return false;
   };
 
   return (

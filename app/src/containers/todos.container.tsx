@@ -14,6 +14,7 @@ function TodosContainer(props: TodosViewProps) {
   const [todos, setTodos] = useRecoilState(todosProvider);
 
   const fetchTodos = () => {
+    setLoading(true);
     TodoRepository.get()
       .then((json) => {
         const keys: Array<number> = [];

@@ -58,17 +58,18 @@ function TodoView(props: TodoViewProps) {
     setLocal({ ...local, done: !local.done });
   };
 
-  const handleCancel = () => {
+  const handleCancel = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (todo) {
       setLocal(todo);
     }
   };
 
-  const handleRefresh = () => {
+  const handleRefresh = (e: React.MouseEvent) => {
+    e.preventDefault();
     if (onRefresh) {
       onRefresh();
     }
-    return false;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -76,7 +77,6 @@ function TodoView(props: TodoViewProps) {
     if (onSubmit) {
       onSubmit(local);
     }
-    return false;
   };
 
   return (
