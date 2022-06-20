@@ -1,0 +1,41 @@
+version: "3.9"
+
+volumes:
+  db:
+
+services:
+  db:
+    container_name: db
+    image: postgres
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  api:
+    container_name: api
+    build: ./api
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./api:/code
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - db
+  app:
+    container_name: app
+    build: ./app
+    command: npm run start
+    volumes:
+      - ./app:/code
+  nginx:
+    container_name: nginx
+    build: ./nginx
+    ports:
+      - 8080:80
+    depends_on:
+      - api
+      - app
