@@ -1,18 +1,19 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import TodoContainer from './containers/todo.container';
+import { Paper } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
 
+import TodoContainer from './containers/todo.container';
 import TodosContainer from './containers/todos.container';
 
 function App() {
   return (
-    <BrowserRouter>
+    <Paper sx={{ minHeight: '100vh', borderRadius: 0 }}>
       <Routes>
         <Route path="/" element={<TodosContainer />} />
         <Route path="/new" element={<TodoContainer create />} />
         <Route path="/:id" element={<TodoContainer />} />
       </Routes>
-    </BrowserRouter>
+    </Paper>
   );
 }
 

@@ -4,17 +4,15 @@ import {
   Container,
   IconButton,
   List,
-  ListItem,
-  ListItemText,
   Toolbar,
   Typography,
 } from '@mui/material';
 import SyncIcon from '@mui/icons-material/Sync';
-import { Link } from 'react-router-dom';
 
 import { Todo } from '../models/todo.model';
 import LoadingComponent from '../components/loading.component';
 import ErrorComponent from '../components/error.component';
+import ItemComponent from '../components/item.component';
 
 type TodosViewProps = {
   todos?: Array<Todo>;
@@ -55,11 +53,13 @@ function TodosView(props: TodosViewProps) {
       <Container>
         <List>
           {todos?.map((todo) => (
-            <ListItem key={todo.id}>
-              <Link to={`${todo.id}`}>
-                <ListItemText primary={todo.title} />
-              </Link>
-            </ListItem>
+            <ItemComponent
+              key={todo.id}
+              to={todo.id}
+              title={todo.title}
+              description={todo.description}
+              edited={todo.edited}
+            />
           ))}
         </List>
       </Container>
