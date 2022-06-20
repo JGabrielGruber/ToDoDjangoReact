@@ -8,7 +8,7 @@ import TodoRepository from '../repositories/todo.repository';
 import TodosView, { TodosViewProps } from '../views/todos.view';
 
 function TodosContainer(props: TodosViewProps) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const [todos, setTodos] = useRecoilState(todosProvider);
@@ -29,13 +29,13 @@ function TodosContainer(props: TodosViewProps) {
           keys,
           values,
         });
-        setLoading(false);
         setError(false);
       })
       .catch((e) => {
         console.error(e);
         setError(true);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   useEffect(fetchTodos, []);

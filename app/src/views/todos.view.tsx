@@ -43,7 +43,7 @@ function TodosView(props: TodosViewProps) {
       <AppBar color="transparent" position="static">
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Todos
+            To Do list
           </Typography>
           <IconButton onClick={handleRefresh} title="Refresh">
             <SyncIcon />
