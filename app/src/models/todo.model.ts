@@ -45,6 +45,24 @@ class TodoModel implements Todo {
     this.edited = edited;
   }
 
+  static FromObject({
+    title,
+    description,
+    id,
+    created,
+    edited,
+    done,
+  }: Todo): TodoModel {
+    return new this(
+      title,
+      description,
+      id,
+      created,
+      edited,
+      done,
+    );
+  }
+
   static FromJSON(json: TodoJSON): TodoModel {
     const created = json.created ? new Date(json.created) : undefined;
     const edited = json.edited ? new Date(json.edited) : undefined;
