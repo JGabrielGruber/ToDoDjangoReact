@@ -28,14 +28,14 @@ services:
   app:
     container_name: app
     build: ./app
-    command: npm run start
+    command: npm run start -p 8080
     volumes:
       - ./app:/code
   nginx:
     container_name: nginx
     build: ./nginx
     ports:
-      - 8080:80
+      - 3000:80
     volumes:
       - ./nginx:/etc/nginx/conf.d
     depends_on:
