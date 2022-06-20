@@ -13,6 +13,8 @@ import SyncIcon from '@mui/icons-material/Sync';
 import { Link } from 'react-router-dom';
 
 import { Todo } from '../models/todo.model';
+import LoadingComponent from '../components/loading.component';
+import ErrorComponent from '../components/error.component';
 
 type TodosViewProps = {
   todos?: Array<Todo>;
@@ -36,29 +38,6 @@ function TodosView(props: TodosViewProps) {
     return false;
   };
 
-  const renderTodos = () => {
-    if (error) {
-      return (
-        <p>error</p>
-      );
-    } if (loading) {
-      return (
-        <p>loading</p>
-      );
-    }
-    return (
-      <List>
-        {todos?.map((todo) => (
-          <ListItem key={todo.id}>
-            <Link to={`${todo.id}`}>
-              <ListItemText primary={todo.title} />
-            </Link>
-          </ListItem>
-        ))}
-      </List>
-    );
-  };
-
   return (
     <>
       <AppBar color="transparent" position="static">
@@ -71,8 +50,18 @@ function TodosView(props: TodosViewProps) {
           </IconButton>
         </Toolbar>
       </AppBar>
+      <ErrorComponent open={error || false} onRetry={handleRefresh} />
+      <LoadingComponent open={loading || false} />
       <Container>
-        {renderTodos()}
+        <List>
+          {todos?.map((todo) => (
+            <ListItem key={todo.id}>
+              <Link to={`${todo.id}`}>
+                <ListItemText primary={todo.title} />
+              </Link>
+            </ListItem>
+          ))}
+        </List>
       </Container>
     </>
   );
