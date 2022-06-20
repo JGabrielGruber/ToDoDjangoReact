@@ -41,7 +41,7 @@ class TodoModel implements Todo {
     this.edited = edited;
   }
 
-  static FromJSON(json: TodoJSON) : TodoModel {
+  static FromJSON(json: TodoJSON): TodoModel {
     const created = json.created ? new Date(json.created) : undefined;
     const edited = json.edited ? new Date(json.edited) : undefined;
     return new this(
@@ -54,7 +54,7 @@ class TodoModel implements Todo {
     );
   }
 
-  toJSON() : TodoJSON {
+  toJSON(): TodoJSON {
     return {
       id: this.id,
       title: this.title,
