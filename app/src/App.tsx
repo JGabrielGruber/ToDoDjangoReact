@@ -1,10 +1,15 @@
 import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import TodosView from './views/todos.view';
+import TodosContainer from './containers/todos.container';
 
 function App() {
   return (
-    <TodosView />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<TodosContainer />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

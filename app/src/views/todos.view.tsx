@@ -1,17 +1,41 @@
 import React from 'react';
 import {
-  AppBar, Container, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography,
+  AppBar,
+  Container,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Toolbar,
+  Typography,
 } from '@mui/material';
+import SyncIcon from '@mui/icons-material/Sync';
+import { Link } from 'react-router-dom';
+
 import { Todo } from '../models/todo.model';
 
 type TodosViewProps = {
   todos?: Array<Todo>;
   loading?: boolean;
   error?: boolean;
+  onRefresh?: CallableFunction;
 }
 
 function TodosView(props: TodosViewProps) {
-  const { todos, loading, error } = props;
+  const {
+    todos,
+    loading,
+    error,
+    onRefresh,
+  } = props;
+
+  const handleRefresh = () => {
+    if (onRefresh) {
+      onRefresh();
+    }
+    return false;
+  };
+
   const renderTodos = () => {
     if (error) {
       return (
@@ -26,9 +50,9 @@ function TodosView(props: TodosViewProps) {
       <List>
         {todos?.map((todo) => (
           <ListItem key={todo.id}>
-            <ListItemButton>
+            <Link to={`${todo.id}`}>
               <ListItemText primary={todo.title} />
-            </ListItemButton>
+            </Link>
           </ListItem>
         ))}
       </List>
@@ -37,11 +61,14 @@ function TodosView(props: TodosViewProps) {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar color="transparent" position="static">
         <Toolbar>
-          <Typography variant="h6">
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
             Todos
           </Typography>
+          <IconButton onClick={handleRefresh} title="Refresh">
+            <SyncIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
       <Container>
@@ -55,6 +82,9 @@ TodosView.defaultProps = {
   todos: [],
   loading: false,
   error: false,
+  onRefresh: () => { },
 };
+
+export type { TodosViewProps };
 
 export default TodosView;
