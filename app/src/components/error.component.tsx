@@ -4,8 +4,9 @@ import {
   Card,
   CardActions,
   Modal,
-  Paper,
+  Container,
   Typography,
+  CardContent,
 } from '@mui/material';
 import styled from 'styled-components';
 
@@ -14,12 +15,12 @@ type ErrorComponentProps = {
   open?: boolean,
 };
 
-const StyledPaper = styled(Paper)`
+const StyledContainer = styled(Container)`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 10px;
+  padding: 0;
 `;
 
 function ErrorComponent(props: ErrorComponentProps) {
@@ -32,18 +33,23 @@ function ErrorComponent(props: ErrorComponentProps) {
 
   return (
     <Modal open={open || false}>
-      <StyledPaper>
+      <StyledContainer maxWidth="xs">
         <Card>
-          <Typography>
-            error
-          </Typography>
+          <CardContent>
+            <Typography variant="h5">
+              Error
+            </Typography>
+            <Typography variant="body2">
+              An unexpected error occurred, would you like to retry?
+            </Typography>
+          </CardContent>
           <CardActions>
             <Button onClick={handleRetry}>
-              Retry?
+              Retry
             </Button>
           </CardActions>
         </Card>
-      </StyledPaper>
+      </StyledContainer>
     </Modal>
   );
 }
