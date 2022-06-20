@@ -1,13 +1,9 @@
 import { atom } from 'recoil';
-import TodoModel from '../models/todo.model';
-import TodoRepository from '../repositories/todo.repository';
+import { Todo } from '../models/todo.model';
 
-const todoProvider = atom({
+const todoProvider = atom<Todo>({
   key: 'todoProvider',
-  default: async () => {
-    const json = await TodoRepository.getDetail();
-    return TodoModel.FromJSON(json);
-  },
+  default: undefined,
 });
 
 export default todoProvider;
