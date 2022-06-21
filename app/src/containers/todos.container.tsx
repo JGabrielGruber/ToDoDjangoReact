@@ -68,7 +68,7 @@ function TodosContainer() {
 
   useEffect(fetchTodos, []);
 
-  const conditionals = ['Both', 'Done', 'Not done'];
+  const conditionals = ['All', 'Done', 'Not done'];
   const handleChangeConditional = (index: number) => {
     const params = getParams();
     setConditional(index);
