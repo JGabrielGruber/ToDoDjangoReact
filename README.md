@@ -9,29 +9,60 @@ your local machine for development and testing purposes.
 
 ### Prerequisites
 
-Requirements for the software and other tools to build, test and push 
+Requirements for the software and other tools to build and test 
 - [Git](https://git-scm.com/downloads)
 - [Docker](https://www.docker.com/get-started/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
+- [Nodejs](https://nodejs.org/en/)
 
 ### Installing
 
-In a terminal, clone the repository:
+Inside a terminal, clone the repository and access it's folder:
+```bash
+git clone https://github.com/JGabrielGruber/ToDoDjangoReact.git && cd ToDoDjangoReact
+```
+#### NodeJS workaround
 
-    git clone https://github.com/JGabrielGruber/ToDoDjangoReact.git
+Currently, some development dependencies aren't being installed on the **React APP container**, to solve this, you'll need to manually install them on the **app** folder, using the following command:
+```bash
+cd app && npm install -D && cd ..
+```
 
-Enter into the project folder:
+## Running locally
 
-    cd ToDoDjangoReact
+### Starting the containers
 
+Inside the **ToDoDjangoReact** folder, run the following command to start the containers:
+```bash
+docker-compose up
+```
 
-### Running locally
+This will build and run four containers:
+- **api**
+  - which will be running our Django API
+- **app**
+  - responsible for our React APP
+- **db**
+  - the Postgres database used by our api
+- **nginx**
+  - a proxy that'll centralize our access to the application
 
-Inside the project folder, run the following command to start the containers:
+### Migrating the database
 
-    docker-compose up
+*FIRST TIME ONLY*
 
-You can access the application in http://localhost:3000
+It's fundamental to the Django API that you migrate it's database schema the first time you run the application, for that, we'll run a command inside the **Django API container**:
+```bash
+docker exec -it api python manage.py migrate
+```
+
+### Testing the APP
+
+You can check if the React APP is running, open the following link in your browser: http://localhost:3000
+
+### Testing the API
+
+If you want to see the Django API magic, you can use the same link, but with the /api path, for example, to list the todos: http://localhost:3000/api/todos
 
 
 ## Authors
