@@ -19,6 +19,7 @@ import LoadingComponent from '../components/loading.component';
 import ErrorComponent from '../components/error.component';
 import ItemComponent from '../components/item.component';
 import SearchComponent from '../components/search.component';
+import AddComponent from '../components/add.component';
 
 type TodosViewProps = {
   todos?: Array<Todo>;
@@ -27,12 +28,13 @@ type TodosViewProps = {
   onRefresh?: CallableFunction;
   search?: string;
   conditionals: Array<string>;
-  conditional: number,
+  conditional: number;
   onChangeConditional: CallableFunction;
   orders: Array<string>;
-  order: number,
+  order: number;
   onChangeOrder: CallableFunction;
   onFind: CallableFunction;
+  onAdd: CallableFunction;
 }
 
 function TodosView(props: TodosViewProps) {
@@ -49,6 +51,7 @@ function TodosView(props: TodosViewProps) {
     orders,
     order,
     onChangeOrder,
+    onAdd,
   } = props;
 
   const [query, setQuery] = useState('');
@@ -79,6 +82,8 @@ function TodosView(props: TodosViewProps) {
       onRefresh();
     }
   };
+
+  const handleAdd = onAdd;
 
   return (
     <>
@@ -157,6 +162,7 @@ function TodosView(props: TodosViewProps) {
           ))}
         </List>
       </Container>
+      <AddComponent onClick={handleAdd} />
     </>
   );
 }

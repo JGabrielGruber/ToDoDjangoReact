@@ -118,6 +118,10 @@ function TodosContainer() {
     fetchTodos();
   };
 
+  const handleAdd = () => {
+    navigate('/new');
+  };
+
   return (
     <TodosView
       loading={loading}
@@ -132,6 +136,7 @@ function TodosContainer() {
       onFind={handleFind}
       order={order}
       conditional={conditional}
+      onAdd={handleAdd}
     />
   );
 }
