@@ -5,5 +5,4 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /code
 COPY package-lock.json /code
 RUN npm install
-RUN npm i -D
 COPY . /code/
