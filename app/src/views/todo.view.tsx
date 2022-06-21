@@ -156,6 +156,20 @@ function TodoView(props: TodoViewProps) {
               label="Done"
             />
           </Grid>
+          { todo ? (
+            <>
+              <Grid item md={3}>
+                <Typography>
+                  {`Created ${local.created?.toLocaleString()}`}
+                </Typography>
+              </Grid>
+              <Grid item md={3}>
+                <Typography>
+                  {`Edited ${local.edited?.toLocaleString()}`}
+                </Typography>
+              </Grid>
+            </>
+          ) : '' }
           <Grid container item spacing={2} direction="row">
             <Grid item xs={12} sm={12} md={3}>
               <Button color="error" fullWidth disabled={!todo} onClick={handleDelete} variant="outlined">

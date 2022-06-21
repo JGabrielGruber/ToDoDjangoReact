@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
 import TodoModel, { Todo } from '../models/todo.model';
@@ -18,7 +18,6 @@ function TodoContainer(props: TodoContainerProps) {
   const [error, setError] = useState(false);
 
   const [todo, setTodo] = useRecoilState(todoProvider);
-  const resetTodo = useResetRecoilState(todoProvider);
   const navigate = useNavigate();
 
   const fetchTodo = () => {
@@ -34,18 +33,18 @@ function TodoContainer(props: TodoContainerProps) {
           setError(true);
         })
         .finally(() => setLoading(false));
-    } else {
-      resetTodo();
     }
   };
 
-  useEffect(fetchTodo, []);
+  useEffect(fetchTodo, [create]);
 
   const handleSubmit = (item: Todo) => {
     const data = TodoModel.FromObject(item);
     if (!todo) {
       TodoRepository.create(data.toJSON())
-        .then((json) => navigate(json.id))
+        .then((json) => {
+          navigate(`/${json.id}`);
+        })
         .catch((e) => {
           console.error(e);
           setError(true);

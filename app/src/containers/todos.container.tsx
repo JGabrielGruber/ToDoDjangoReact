@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import TodoModel, { Todo } from '../models/todo.model';
+import todoProvider from '../providers/todo.provider';
 
 import todosProvider from '../providers/todos.provider';
 import TodoRepository from '../repositories/todo.repository';
@@ -39,6 +40,7 @@ function TodosContainer() {
 
   const [todos, setTodos] = useRecoilState(todosProvider);
   const navigate = useNavigate();
+  const resetTodo = useResetRecoilState(todoProvider);
 
   const fetchTodos = () => {
     setLoading(true);
@@ -119,6 +121,7 @@ function TodosContainer() {
   };
 
   const handleAdd = () => {
+    resetTodo();
     navigate('/new');
   };
 
