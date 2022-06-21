@@ -11,8 +11,8 @@ class TodoRepository {
       '//',
       global.location.host,
       this.pathname,
-      global.location.search,
       '/',
+      global.location.search,
     ].join(''));
   }
 
