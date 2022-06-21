@@ -26,6 +26,12 @@ function SearchComponent(props: SearchComponentProps) {
     onClick();
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.code === 'Enter') {
+      onClick();
+    }
+  };
+
   return (
     <FormControl fullWidth>
       <InputLabel htmlFor="search">Search</InputLabel>
@@ -34,6 +40,7 @@ function SearchComponent(props: SearchComponentProps) {
         fullWidth
         value={value}
         onChange={handleChange}
+        onKeyDown={handleKeyDown}
         endAdornment={(
           <InputAdornment position="end">
             <IconButton
