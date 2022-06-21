@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import {
   AppBar,
+  Box,
   Button,
   Container,
   FormControl,
   FormControlLabel,
   Grid,
   IconButton,
-  OutlinedInput,
+  TextField,
   Switch,
   Toolbar,
   Typography,
 } from '@mui/material';
 import SyncIcon from '@mui/icons-material/Sync';
-import { Link } from 'react-router-dom';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import TodoModel, { Todo } from '../models/todo.model';
 import LoadingComponent from '../components/loading.component';
@@ -25,6 +26,8 @@ type TodoViewProps = {
   error?: boolean;
   onRefresh?: CallableFunction;
   onSubmit?: CallableFunction;
+  onDelete?: CallableFunction;
+  onBack?: CallableFunction;
 }
 
 function TodoView(props: TodoViewProps) {
@@ -34,6 +37,8 @@ function TodoView(props: TodoViewProps) {
     error,
     onRefresh,
     onSubmit,
+    onDelete,
+    onBack,
   } = props;
 
   const [local, setLocal] = useState<Todo>(new TodoModel('', ''));
@@ -79,11 +84,27 @@ function TodoView(props: TodoViewProps) {
     }
   };
 
+  const handleBack = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onBack) {
+      onBack();
+    }
+  };
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onDelete) {
+      onDelete();
+    }
+  };
+
   return (
     <>
       <AppBar color="transparent" position="static">
         <Toolbar>
-          <Link to="/">todos</Link>
+          <Button onClick={handleBack} startIcon={<ArrowBackIcon />} size="small">
+            back
+          </Button>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             { todo ? todo.title : 'New To Do' }
           </Typography>
@@ -95,47 +116,63 @@ function TodoView(props: TodoViewProps) {
       <Container component="form" onSubmit={handleSubmit}>
         <LoadingComponent open={loading || false} />
         <ErrorComponent open={error || false} onRetry={handleRefresh} />
-        <FormControl fullWidth>
-          <OutlinedInput
-            fullWidth
-            placeholder="A resume for your to do"
-            name="title"
-            onChange={handleChangeTitle}
-            required
-            title="Title"
-            value={local?.title}
-          />
-        </FormControl>
-        <FormControl fullWidth>
-          <OutlinedInput
-            fullWidth
-            placeholder="Describe what you need to do"
-            multiline
-            name="description"
-            onChange={handleChangeDescription}
-            required
-            title="Description"
-            value={local?.description}
-          />
-        </FormControl>
-        <FormControlLabel
-          control={(
-            <Switch
-              checked={local.done}
-              onChange={handleChangeDone}
-              inputProps={{ 'aria-label': 'controlled' }}
-            />
-          )}
-          label="Done"
-        />
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6} md={3}>
-            <Button disabled={!todo && todo === local} onClick={handleCancel}>
-              Cancel
-            </Button>
+        <Grid container spacing={4} direction="column">
+          <Grid item md={12}>
+            <FormControl fullWidth>
+              <TextField
+                fullWidth
+                placeholder="A resume for your to do"
+                name="title"
+                onChange={handleChangeTitle}
+                required
+                label="Title"
+                value={local?.title}
+              />
+            </FormControl>
           </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Button type="submit">Save</Button>
+          <Grid item md={12}>
+            <FormControl fullWidth>
+              <TextField
+                fullWidth
+                placeholder="Describe what you need to do"
+                multiline
+                name="description"
+                onChange={handleChangeDescription}
+                required
+                label="Description"
+                value={local?.description}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item md={3}>
+            <FormControlLabel
+              control={(
+                <Switch
+                  checked={local.done}
+                  onChange={handleChangeDone}
+                  inputProps={{ 'aria-label': 'controlled' }}
+                />
+              )}
+              label="Done"
+            />
+          </Grid>
+          <Grid container item spacing={2} direction="row">
+            <Grid item xs={12} sm={12} md={3}>
+              <Button color="error" fullWidth disabled={!todo} onClick={handleDelete} variant="outlined">
+                Delete
+              </Button>
+            </Grid>
+            <Grid item xs={0} sm={0} md={3}>
+              <Box sx={{ flexGrow: 1 }} />
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Button color="warning" fullWidth disabled={!todo && todo === local} onClick={handleCancel}>
+                Cancel
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Button color="primary" fullWidth variant="contained" type="submit">Save</Button>
+            </Grid>
           </Grid>
         </Grid>
       </Container>
@@ -149,6 +186,8 @@ TodoView.defaultProps = {
   error: false,
   onRefresh: () => { },
   onSubmit: () => { },
+  onDelete: () => { },
+  onBack: () => { },
 };
 
 export type { TodoViewProps };
